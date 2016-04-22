@@ -49,9 +49,9 @@ public:
     boolean moveToNext();
     
     unsigned char getByte();
-    void prepareBytes();
-    unsigned int getBytes1stSize();
-    unsigned int getBytes2ndSize();
+    void prepareBytes(); // unused untested
+    unsigned int getBytes1stSize(); // unused untested
+    unsigned int getBytes2ndSize(); // unused untested
     
     void seek(uint32_t pos);
     void loadFromSdFile();
