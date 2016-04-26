@@ -4,9 +4,10 @@
 #include <stdint.h>
 #include "Arduino.h"
 
-const uint16_t bufferSize = 1024;
+const uint16_t bufferSize = 2048;
 extern uint16_t audioBuffer[bufferSize];
 extern volatile uint32_t sampleIndex;
+extern volatile boolean audioInterruptPaused;
 
 
 void tcConfigure(uint32_t sampleRate);

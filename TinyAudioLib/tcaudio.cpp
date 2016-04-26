@@ -5,6 +5,7 @@
 
 uint16_t audioBuffer[bufferSize];
 volatile uint32_t sampleIndex = 0;
+volatile boolean audioInterruptPaused = false;
 
 
 void tcConfigure(uint32_t sampleRate)
@@ -75,12 +76,13 @@ extern void Audio_Handler (void);
 
 void Audio_Handler (void)
 {
-  while (DAC->STATUS.bit.SYNCBUSY == 1);
-  DAC->DATA.reg =  audioBuffer[sampleIndex++];
-  while (DAC->STATUS.bit.SYNCBUSY == 1);
+  if(!audioInterruptPaused) {
+	  while (DAC->STATUS.bit.SYNCBUSY == 1);
+	  DAC->DATA.reg =  audioBuffer[sampleIndex++];
+	  while (DAC->STATUS.bit.SYNCBUSY == 1);
 
-  if (sampleIndex > bufferSize-1 ) sampleIndex = 0;
-
+	  if (sampleIndex > bufferSize-1 ) sampleIndex = 0;
+  }
   // Clear the interrupt
   TC5->COUNT16.INTFLAG.bit.MC0 = 1;
 }
